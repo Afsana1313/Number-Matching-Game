@@ -44,11 +44,10 @@
   background-color: rgba(255,255,255,0.5);
 }
 .result{
-  width: 40vw;
-  height: 40vh;
+  padding: 20px 30px;
   border-radius: 5px;
   border: 5px solid white;
-  background-color: gold;
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,6 +58,11 @@
   color: white;
   text-shadow: 0 0 10px black;
   /*box-shadow: 0 0 50px inset white;*/
+}
+.total_time{
+  
+  font-size: 30px;
+  line-height: 34px;
 }
 .result div{
   margin: 20px 0;
@@ -143,10 +147,13 @@
   }
   .result{
     width: 80%;
-    height: 50vh;
+    padding: 50px;
     font-size: 40px;
     line-height: 44px;
-    height: 60vh;
+  }
+  .total_time{
+    font-size: 25px;
+    line-height: 29px;
   }
   .result div{
     margin: 10px 0;

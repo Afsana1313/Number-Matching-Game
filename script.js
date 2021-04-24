@@ -1,1 +1,149 @@
-eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('$(13).14(4(){4 J(){7 0}3 e=10;3 f=15;3 g=16(4(){9(e==0){J()}$(".17-u 18 19").D(e);9(e!=0)e=e-1},f);3 x;3 h=0;3 j=0;3 k=0;3 l=0;3 m=0;3 n=0;3 o=0;3 p=0;3 q={K:"5"};4 L(a,b){$("#5-"+a).M("y");$("#5-"+b).M("y");7 0}4 E(a,b){$("#5-"+a).N("v");$("#5-"+b).N("v");7 0}4 z(){k=0;l=0;m=0;n=0;h=0;j=0;7 0}4 O(a,b){9(h==0){h=1;k=b;m=a}P 9(j==0&&b!=k){n=a;j=1;l=b;9(m===n){o++;9(o===x){o=0;1a(4(){Q()},1b)}E(k,l);z()}P{p++;L(k,l);z()}}7 1}4 R(i){7 4(a){$(`#5-${i}`).1c("y");O($("#5-"+i).D(),i)}}4 S(r,a){$(`#5-${a}`).D(r);7 1}4 T(x){s(3 i=1;i<=x*2;i++){$(`#5-${i}`).1d("v",R(i))}3 c=[];3 d=[];s(3 i=0;i<x;i++){3 a=8.A((8.B()*10)+1);3 b=8.A((8.B()*10)+1);c[i]=a*b}s(3 i=0;i<x;i++){d[i*2]=c[i];d[i*2+1]=c[i]}s(w t=0;t<x*2-1;t++){w U=x*2-1;w F=t+1;w G=8.A(8.B()*(U-F))+F;w V=d[t];d[t]=d[G];d[G]=V}s(3 i=0;i<x*2;i++){S(d[i],i+1)}}4 W(x){s(3 i=1;i<=x*2;i++){3 a=`<C X=\'5 y 1e\'K=\'5-${i}\'></C>`;$(".6-u-1").Y(a)}7 0}4 6(){$(".Z-6").H("I","11");x=8.A((8.B()*10)+1);W(x);T(x)}4 Q(){$(\'.12-6\').H("I","1f");$(\'.1g\').v(()=>{$(\'.12-6\').H("I","11");$(\'.6-u-1\').E();3 a=`<C X=\'6-u-1\'></C>`;$(\'.u\').Y(a);z();6()})}$(".Z-6 .1h").v(4(){6()})});',62,80,'|||var|function|box|game|return|Math|if|||||||||||||||||||for|index|container|click|let||black|reset|floor|random|div|text|remove|minIndex|swapIndex|css|display|endGame|id|all_black|addClass|off|check|else|resultBoard|generate_handler|addNumber|startGame|maxIndex|tmp|createBox|class|append|start||none|end|document|ready|1000|setInterval|score|h2|span|setTimeout|2000|toggleClass|bind|unselectable|flex|reload|button'.split('|'),0,{}))
+
+$(document).ready(function(){
+  var timer = 0;
+  var time;
+  var interval = 1000;
+  var ctime;
+ 
+var x; 
+var set_1 = 0;
+var set_2 = 0;
+var id_1 = 0;
+var id_2 = 0;
+var set_value_1 = 0;
+var set_value_2 = 0;
+var result = 0;
+var error = 0;  
+
+function all_black(a,b){
+  $("#box-"+a).addClass("black");
+  $("#box-"+b).addClass("black");
+  return 0;
+}
+function remove(a,b){
+  $("#box-"+a).off("click");
+  $("#box-"+b).off("click");
+  return 0;
+}
+function reset(){
+      id_1 = 0;
+      id_2 = 0;
+      set_value_1 = 0;
+      set_value_2 = 0;
+      set_1 = 0;
+      set_2 = 0;
+  return 0 ;
+}
+function check(a,b){
+  if (set_1 == 0) {
+    set_1 = 1;
+    id_1 = b;
+    set_value_1 = a;
+  }
+  else if(set_2 == 0 && b!= id_1){
+    set_value_2 = a;
+    set_2 =1;
+    id_2 = b;
+    if(set_value_1 === set_value_2){
+      result++;
+      if(result === x){
+        result = 0;
+        
+        setTimeout(function() {
+          clearInterval(ctime);
+          resultBoard();
+          }, 1000);
+        
+      }
+      remove(id_1,id_2);
+      reset();
+    }
+    else{
+      error++;
+      //document.getElementById("myAudioError").play();
+      //$("#myAudioError").play();
+      all_black(id_1,id_2);
+      reset();      
+    }
+  }
+  return 1;
+}
+function generate_handler(i){
+    return function(event){
+      $(`#box-${i}`).toggleClass("black");
+      check($("#box-"+i).text(),i);
+    }
+  }
+  function addNumber(r,a1){ 
+    $(`#box-${a1}`).text(r);
+    return 1;
+  }
+   function startGame(x){
+    ctime = setInterval(function(){
+      time = Math.floor(timer/60) ? Math.floor(timer/60) + " min " + timer%60 + " sec" :  timer%60 + " sec";
+      $(".score-container h2 span").text(time);
+      timer = timer + 1;
+      
+    },interval); 
+     for(var i=1;i<=x*2;i++){
+     $(`#box-${i}`).bind("click",generate_handler(i));
+    }
+  //  // Creating x random numbers to store in an array
+     var random_array = [];
+     var number_assign = [];
+     for(var i=0; i<x;i++){
+       var a = Math.floor((Math.random() * 10) + 1);
+       var b = Math.floor((Math.random() * 10) + 1);
+       random_array[i] = a*b; 
+     }
+     //Assigned numbers
+   for(var i=0; i<x; i++){
+        number_assign[i*2] = random_array[i];
+        number_assign[i*2+1] = random_array[i];
+     }
+     //Shuffled Duplicate Numbers
+     for (let index = 0; index < x*2 - 1; index++) {
+      let maxIndex = x*2 - 1;
+      let minIndex = index + 1;
+      let swapIndex = Math.floor(Math.random() * (maxIndex - minIndex)) + minIndex;
+      let tmp = number_assign[index];
+      number_assign[index] = number_assign[swapIndex];
+      number_assign[swapIndex] = tmp;
+    }
+    for(var i=0; i<x*2; i++){
+      addNumber(number_assign[i],i+1);
+   }
+ }
+   function createBox(x){
+     for(var i=1;i<=x*2;i++){
+     var newElement = `<div class='box black unselectable' id='box-${i}'></div>`;  
+     $(".game-container-1").append(newElement);
+   }
+     return 0;
+   }
+   function game(){
+     
+    $(".start-game").css("display","none");
+    x = Math.floor((Math.random() * 10) + 1);
+    createBox(x);
+    startGame(x);
+   }
+   function resultBoard(){
+    $('.end-game').css("display","flex");
+    $('.total_time').text("Your total time is "+time);
+    $('.reload').click(()=>{
+      clearInterval(ctime);
+      timer = 0;
+      $('.end-game').css("display","none");
+      $('.game-container-1').remove();
+      var newElement = `<div class='game-container-1'></div>`;
+      
+      $('.container').append(newElement);
+      reset();
+      game();
+    });
+}
+  $(".start-game .button").click(function(){
+    game();
+  });
+});
